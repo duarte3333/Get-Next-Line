@@ -1,14 +1,40 @@
-// size_t	ft_strlen(const char *str)
-// {
-// 	int	i;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/29 18:20:27 by dsa-mora          #+#    #+#             */
+/*   Updated: 2022/10/29 18:20:27 by dsa-mora         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// 	i = 0;
-// 	while (str[i] != '\0')
-// 		i++;
-// 	return (i);
-// }
+#include "get_next_line.h"
+#include <fcntl.h>
 
-// char	*ft_strdup(const char *src)
+size_t	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
+}
+
+size_t	ft_strlen_nl(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+		i++;
+	return (i);
+}
+
+
+// char	*ft_strdup_until_nl(const char *src)
 // {
 // 	int		size;
 // 	char	*dest;
@@ -19,7 +45,7 @@
 // 	if (!dest)
 // 		return (NULL);
 // 	i = 0;
-// 	while (src[i] != '\0')
+// 	while (src[i] != '\n' && src[i] != '\0'  )
 // 	{
 // 		dest[i] = src[i];
 // 		i++;
@@ -28,45 +54,74 @@
 // 	return (dest);
 // }
 
-//A cada iteracao o read() retorna o numero de bytes que ja leu
-//ou seja, incrementa 1 o valor que retorna e passa a apontar
-//para o proximo elemento do buffer
-//Se acabar o ficheiro sai do loop, pois nb_line = 0
-//Se chegar a uma newline sai do loop, pois acabou a linha
-// char	*ft_read_line(int fd)
-// {
-// 	int		nb_line;
-// 	char	line[10000];
-// 	char	buffer;
-// 	int		i;
+//Retorna a palavra a partir do primeiro elemento c que encontrar
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s != '\0')
+	{
+		if (*s == c)
+			return ((char *)s);
+		s++;
+	}
+	if (c == '\0')
+		return ((char *)s);
+	return (0);
+}
 
-// 	nb_line = 1;
-// 	i = -1;
-// 	buffer = 0;
-// 	while (nb_line > 0)
-// 	{
-// 		if (buffer == '\n')
-// 			break ;
-// 		nb_line = read(fd, &buffer, 1);
-// 		line[++i] = buffer;
-// 	}
-// 	line[i] = '\0';
-// 	return (ft_strdup(line));
-// }
 
-// char	*get_next_line(int fd)
-// {
-// 	//char	*buffer;
-// 	char	*ret;
+//Esta funcao recebe duas strings e faz a concatenação de ambas
+//ou seja, junta-as
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		size_concat;
+	char	*concat;
+	char	*temp;
 
-// 	//buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-// 	ret = (char *)malloc((10000 + 1) * sizeof(char));
-// 	//!buffer
-// 	if (read(fd, 0, 0) < 0)
-// 		return (NULL);  //sera que é -1?
-// 	ret = ft_read_line(fd);
-// 	//free(buffer);
-// 	if (!ret)
-// 		return (NULL);
-// 	return (ret);
-// } 
+	size_concat = ft_strlen(s1) + ft_strlen(s2);
+	if (size_concat == 0)
+		return ((char *)malloc(0 * sizeof(char)));
+	concat = (char *)malloc((size_concat + 1) * sizeof(char));
+	concat[size_concat] = 0;
+	temp = concat;
+	while (*s1)
+	{
+		*concat = *s1;
+		concat++;
+		s1++;
+	}
+	while (*s2)
+	{
+		*concat = *s2;
+		concat++;
+		s2++;
+	}
+	concat = temp;
+	return (concat);
+}
+
+//s - uma str normal
+//start - indice do str onde comeca a substr
+//len - tamanho da maximo da substr
+//Esta funcao vai criar uma substr desde o start ao indice len do s
+//sendo o len um indice posterior ao s
+//Caso o indice len exceda o tamanho da str s ele acaba a substring
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*substr;
+	char	*temp;
+
+	substr = (char *)malloc((len + 1) * sizeof(char));
+	temp = substr;
+	if (!substr)
+		return (NULL);
+	while (len && s[start] != 0 && start <= ft_strlen(s))
+	{
+		*substr = s[start];
+		substr++;
+		start++;
+		len--;
+	}
+	*substr = 0;
+	substr = temp;
+	return (substr);
+}
