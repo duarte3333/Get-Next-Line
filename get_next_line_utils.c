@@ -33,27 +33,6 @@ size_t	ft_strlen_nl(const char *str)
 	return (i);
 }
 
-
-// char	*ft_strdup_until_nl(const char *src)
-// {
-// 	int		size;
-// 	char	*dest;
-// 	int		i;
-
-// 	size = ft_strlen(src);
-// 	dest = (char *)malloc((size + 1) * sizeof(char));
-// 	if (!dest)
-// 		return (NULL);
-// 	i = 0;
-// 	while (src[i] != '\n' && src[i] != '\0'  )
-// 	{
-// 		dest[i] = src[i];
-// 		i++;
-// 	}
-// 	dest[i] = '\0';
-// 	return (dest);
-// }
-
 //Retorna a palavra a partir do primeiro elemento c que encontrar
 char	*ft_strchr(const char *s, int c)
 {

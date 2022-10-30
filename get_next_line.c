@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/10/29 18:49:07 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/10/30 13:05:29 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,35 @@
 char	*forward_line(char *line)
 {
 	char	*tmp;
-
-	if (*line == '\0' || *line == '\n')
-		return (0);
-	while (*line != '\0' && *line != '\n')
+	int		i;
+	int		j;
+	int		size_tmp;
+	
+	i = 0;
+	if (line[i] == '\0' || line[i] == '\n')
+		return (NULL);
+	while (line[i] != '\0' && line[i] != '\n')
+		i++;
+	if (line[i] == '\n')
+		j = ++i;
+	while (line[i] != '\0')
+		i++;
+	printf("\nValor do j: %i\n", j);
+	printf("Ultimo indice %i\n", i);
+	size_tmp = i - j + 1;
+	tmp = (char *)malloc((size_tmp)*sizeof(char));
+	tmp[size_tmp - 1] = 0;
+	i = 0;
+	while (size_tmp - 1)
 	{
-		line++;
+		tmp[i] = line[j];
+		i++;
+		j++;
+		size_tmp--;
 	}
-	while (*line != '\0')
-	{
-		*tmp = *line;
-		line++;
-		tmp++;
-	}
+	printf("\nString temp: %s\n", tmp);
 	free(line);
-	line = tmp;
-	return (line);
+	return (tmp);
 }
 
 // A cada iteracao o read() retorna o numero de bytes que ja leu
@@ -62,7 +75,7 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	static char	*line;
-	static char	*ready_line;
+	char	*ready_line;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	buffer[BUFFER_SIZE] = 0;
@@ -77,20 +90,36 @@ char	*get_next_line(int fd)
 		line = ft_read_line(line, fd, buffer);
 	free(buffer);
 	buffer = NULL;
+	printf("MY STRING \n%s\n", line);
 	ready_line = ft_substr(line, 0, ft_strlen_nl(line));
+	printf("\nREADY: \n %s\n", ready_line);
 	line = forward_line(line);
+	printf("\nHOW I AM NEXT\n %s\n", line);
 	return (ready_line);
 }
 
 //printf("MY STRING \n%s\n", line);
 //printf("READY: \n %s\n", ready_line);
 //printf("HOW I AM NEXT\n %s\n", line);
-// int	main(void)
-// {
-// 	int fd;
-// 	fd = open("oi.txt", O_RDONLY);
-// 	printf("fd %i\n", fd);
-// 	printf("li isto: %s\n", get_next_line(fd));
-// 	printf("li isto2: %s\n", get_next_line(fd));
-// 	printf("li isto3: %s\n", get_next_line(fd));
-// }
+int	main(void)
+{
+	int fd;
+	fd = open("oi.txt", O_RDONLY);
+	printf("VALOR FD: %i\n", fd);
+	printf("-----------------------------------------------\n");
+	printf("\033[0;32m");
+	printf("ITERATION 1  \n");
+	printf("\033[0m");
+	printf("\nOUTPUT 1 Iteration: %s\n", get_next_line(fd));
+	printf("-----------------------------------------------\n");
+	printf("\033[0;32m");
+	printf("ITERATION 2  \n");
+	printf("\033[0m");
+	printf("\nOUTPUT 2 Iteration: %s\n", get_next_line(fd));
+	printf("-----------------------------------------------\n");
+	printf("\033[0;32m");
+	printf("ITERATION 3  \n");
+	printf("\033[0m");
+	printf("\nOUTPUT 3 Iteration: %s\n", get_next_line(fd));
+	printf("-----------------------------------------------\n");
+}

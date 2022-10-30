@@ -6,7 +6,7 @@ NAME	= get_next_line.a
 LIBC	= ar rcs
 CC		= gcc
 RM		= rm -f
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -D BUFFER_SIZE=42
 
 ${NAME}: ${OBJS}
 	${LIBC} ${NAME} ${OBJS}
@@ -22,3 +22,5 @@ fclean: clean
 re: fclean all
 
 .PHONY: all, clean, fclean, re, bonus
+
+#fullgcc -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
