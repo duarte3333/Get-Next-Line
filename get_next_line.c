@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/10/30 13:05:29 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/10/30 14:00:44 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ char	*forward_line(char *line)
 	int		size_tmp;
 	
 	i = 0;
-	if (line[i] == '\0' || line[i] == '\n')
+	if (!line || line[i] == '\0' || line[i] == '\n')
 		return (NULL);
 	while (line[i] != '\0' && line[i] != '\n')
 		i++;
-	if (line[i] == '\n')
-		j = ++i;
+	j = ++i;
 	while (line[i] != '\0')
 		i++;
 	printf("\nValor do j: %i\n", j);
@@ -86,7 +85,7 @@ char	*get_next_line(int fd)
 		line = malloc(1);
 		line[0] = 0;
 	}
-	if ((!ft_strchr(line, '\n')))
+	if ((!ft_strchr(line, '\n')) || (!ft_strchr(line, '\n')) )
 		line = ft_read_line(line, fd, buffer);
 	free(buffer);
 	buffer = NULL;
