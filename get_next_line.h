@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:29:15 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/10/29 18:31:21 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/03 21:39:43 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@
 # include <string.h>
 # include <fcntl.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_nl(const char *str);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strchr(char *s, int c);
+char	*ft_strjoin(char *s1, char const *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
 char	*forward_line(char *line);
 char	*ft_read_line(char *line, int fd, char	*buffer);

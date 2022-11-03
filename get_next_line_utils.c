@@ -28,38 +28,40 @@ size_t	ft_strlen_nl(const char *str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return (0);
 	while (str[i] != '\0' && str[i] != '\n')
 		i++;
 	return (i);
 }
 
 //Retorna a palavra a partir do primeiro elemento c que encontrar
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
-	while (*s != '\0')
+	if (s)
 	{
-		if (*s == c)
+		while (s && *s != '\0')
+		{
+			if (*s == (char)c)
+				return ((char *)s);
+			s++;
+		}
+		if (*s == (char)c)
 			return ((char *)s);
-		s++;
 	}
-	if (c == '\0')
-		return ((char *)s);
 	return (0);
 }
 
 //Esta funcao recebe duas strings e faz a concatenação de ambas
 //ou seja, junta-as
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char const *s2)
 {
 	int		size_concat;
 	char	*concat;
 	char	*temp;
 
 	size_concat = ft_strlen(s1) + ft_strlen(s2);
-	if (size_concat == 0)
-		return ((char *)malloc(0 * sizeof(char)));
-	concat = (char *)malloc((size_concat + 1) * sizeof(char));
-	concat[size_concat] = 0;
+	concat = (char *)calloc((size_concat + 1), sizeof(char));
 	temp = concat;
 	while (*s1)
 	{
@@ -74,6 +76,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		s2++;
 	}
 	concat = temp;
+	if (!s1)
+		free(s1);
 	return (concat);
 }
 
