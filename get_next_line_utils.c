@@ -47,7 +47,6 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-
 //Esta funcao recebe duas strings e faz a concatenação de ambas
 //ou seja, junta-as
 char	*ft_strjoin(char const *s1, char const *s2)

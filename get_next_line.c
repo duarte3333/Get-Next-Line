@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/10/30 14:00:44 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:19:02 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*forward_line(char *line)
 	int		i;
 	int		j;
 	int		size_tmp;
-	
+
 	i = 0;
 	if (!line || line[i] == '\0' || line[i] == '\n')
 		return (NULL);
@@ -27,10 +27,8 @@ char	*forward_line(char *line)
 	j = ++i;
 	while (line[i] != '\0')
 		i++;
-	printf("\nValor do j: %i\n", j);
-	printf("Ultimo indice %i\n", i);
 	size_tmp = i - j + 1;
-	tmp = (char *)malloc((size_tmp)*sizeof(char));
+	tmp = (char *)malloc((size_tmp) * sizeof(char));
 	tmp[size_tmp - 1] = 0;
 	i = 0;
 	while (size_tmp - 1)
@@ -40,7 +38,6 @@ char	*forward_line(char *line)
 		j++;
 		size_tmp--;
 	}
-	printf("\nString temp: %s\n", tmp);
 	free(line);
 	return (tmp);
 }
@@ -55,6 +52,7 @@ char	*ft_read_line(char *line, int fd, char	*buffer)
 	int		nb_line;
 	char	*line_temp;
 
+	nb_line = 1;
 	while (nb_line > 0)
 	{
 		line_temp = line;
@@ -74,7 +72,7 @@ char	*get_next_line(int fd)
 {
 	char		*buffer;
 	static char	*line;
-	char	*ready_line;
+	char		*ready_line;
 
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	buffer[BUFFER_SIZE] = 0;
@@ -85,24 +83,21 @@ char	*get_next_line(int fd)
 		line = malloc(1);
 		line[0] = 0;
 	}
-	if ((!ft_strchr(line, '\n')) || (!ft_strchr(line, '\n')) )
+	if (!(ft_strchr(line, '\n')))
 		line = ft_read_line(line, fd, buffer);
 	free(buffer);
-	buffer = NULL;
-	printf("MY STRING \n%s\n", line);
 	ready_line = ft_substr(line, 0, ft_strlen_nl(line));
-	printf("\nREADY: \n %s\n", ready_line);
 	line = forward_line(line);
-	printf("\nHOW I AM NEXT\n %s\n", line);
 	return (ready_line);
 }
 
-//printf("MY STRING \n%s\n", line);
-//printf("READY: \n %s\n", ready_line);
-//printf("HOW I AM NEXT\n %s\n", line);
+// printf("MY STRING \n%s\n", line);
+// printf("READY: \n %s\n", ready_line);
+// printf("HOW I AM NEXT\n %s\n", line);
 int	main(void)
 {
-	int fd;
+	int	fd;
+
 	fd = open("oi.txt", O_RDONLY);
 	printf("VALOR FD: %i\n", fd);
 	printf("-----------------------------------------------\n");
