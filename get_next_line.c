@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/05 18:08:18 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/05 18:26:23 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*forward_line(char *line)
 	}
 	while (line[i] != '\0' && line[i] != '\n')
 		i++;
-	j = ++i;
+	j = i;
 	while (line[i] != '\0')
 		i++;
 	size_tmp = i - j + 1;
@@ -117,28 +117,28 @@ char	*get_next_line(int fd)
 // printf("READY: \n %s\n", ready_line);
 // printf("HOW I AM NEXT\n %s\n", line);
 
-// int	main(void)
-// {
-// 	int	fd;
-// 	char *s;
+int	main(void)
+{
+	int	fd;
+	char *s;
 
-// 	fd = open("oi.txt", O_RDONLY);
-// 	s = get_next_line(fd);
-// 	printf("VALOR FD: %i\n", fd);
-// 	printf("-----------------------------------------------\n");
-// /* 	printf("\033[0;32m");
-// 	printf("ITERATION 1  \n");
-// 	printf("\033[0m"); */
-// 	printf("\nOUTPUT 1 Iteration: %s\n", s); free(s);
-// 	printf("-----------------------------------------------\n");
-// /* 	printf("\033[0;32m");
-// 	printf("ITERATION 2  \n");
-// 	printf("\033[0m"); */
-// 	s = get_next_line(fd); printf("\nOUTPUT 2 Iteration: %s\n", s); free(s);
-// 	printf("-----------------------------------------------\n");
-// /* 	printf("\033[0;32m");
-// 	printf("ITERATION 3  \n");
-// 	printf("\033[0m"); */
-// 	s = get_next_line(fd); printf("\nOUTPUT 3 Iteration: %s\n", s); free(s);
-// 	printf("-----------------------------------------------\n");
-// }
+	fd = open("oi.txt", O_RDONLY);
+	s = get_next_line(fd);
+	printf("VALOR FD: %i\n", fd);
+	printf("-----------------------------------------------\n");
+/* 	printf("\033[0;32m");
+	printf("ITERATION 1  \n");
+	printf("\033[0m"); */
+	printf("\nOUTPUT 1 Iteration: %s\n", s); free(s);
+	printf("-----------------------------------------------\n");
+/* 	printf("\033[0;32m");
+	printf("ITERATION 2  \n");
+	printf("\033[0m"); */
+	s = get_next_line(fd); printf("\nOUTPUT 2 Iteration: %s\n", s); free(s);
+	printf("-----------------------------------------------\n");
+/* 	printf("\033[0;32m");
+	printf("ITERATION 3  \n");
+	printf("\033[0m"); */
+	s = get_next_line(fd); printf("\nOUTPUT 3 Iteration: %s\n", s); free(s);
+	printf("-----------------------------------------------\n");
+}
