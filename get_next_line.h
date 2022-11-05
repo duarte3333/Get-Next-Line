@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:29:15 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/03 21:39:43 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/04 00:03:56 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 
 size_t	ft_strlen(const char *str);
 size_t	ft_strlen_nl(const char *str);
+void	ft_bzero(void *s, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strchr(char *s, int c);
 char	*ft_strjoin(char *s1, char const *s2);
 char	*ft_substr(char *s, unsigned int start, size_t len);
