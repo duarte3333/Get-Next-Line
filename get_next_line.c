@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/07 20:45:06 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:54:55 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,10 @@ char	*ft_forward_line(char *line)
 	//printf("size temp: %i\n",size_tmp);
 	tmp = (char *)malloc((i - j + 1) * sizeof(char));
 	tmp[i - j] = 0;
-	i = 0;
-	while (line[j] != '\0')
-	{
-		tmp[i] = line[j];
-		i++;
-		j++;
-	}
+	i = -1;
+	j--;
+	while (line[++j] != '\0')
+		tmp[++i] = line[j];
 	free(line);
 	//printf("temp: %s\n",tmp);
 	return (tmp);
