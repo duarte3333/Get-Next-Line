@@ -23,49 +23,37 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-size_t	ft_strlen_nl(const char *str)
+size_t	ft_strlen_nl(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (!str)
 		return (0);
+	// if (str[i] == '\n')
+	// 	return (1);
 	while (str[i] != '\0' && str[i] != '\n')
 		i++;
+	i++;
 	return (i);
 }
 
-//Ocupa n bytes com NULL a partir do elemento para o qual s está a apontar
-void	ft_bzero(void *s, size_t n)
+void	*ft_calloc(size_t nelem, size_t elsize)
 {
-	char	*str;
-	int		i;
+	char	*arr;
+	size_t	i;
 
 	i = -1;
-	str = (char *)s;
-	while (n > 0)
-	{
-		str[++i] = 0;
-		n--;
-	}
-}
-
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	void	*p;
-	size_t	final_size;
-
-	if (nmemb == 0 || size == 0)
-	{
-		nmemb++;
-		size++;
-	}
-	final_size = nmemb * size;
-	p = malloc(final_size);
-	if (!p)
+	arr = malloc(elsize * nelem);
+	if (!arr)
 		return (NULL);
-	ft_bzero(p, final_size);
-	return (p);
+	if (nelem != 0)
+	{
+		while (++i < nelem)
+			arr[i] = 0;
+		return ((void *)arr);
+	}
+	return ((void *)arr);
 }
 
 //Retorna a palavra a partir do primeiro elemento c que encontrar
@@ -94,8 +82,8 @@ char	*ft_strjoin(char *s1, char const *s2)
 	char	*temp;
 
 	size_concat = ft_strlen(s1) + ft_strlen(s2);
-	printf("\nsize buffer qnd leio %i\n", size_concat + 1);
-	concat = (char *)ft_calloc((size_concat + 1), sizeof(char));
+	//printf("\nsize buffer qnd leio %i\n", size_concat + 1);
+	concat = (char *)calloc((size_concat + 1), sizeof(char));
 	temp = concat;
 	while (*s1)
 	{
@@ -129,7 +117,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	substr = (char *)malloc((len + 1) * sizeof(char));
-	printf("len substr %li\n", len + 1);
+	//printf("len substr: %li\n", len + 1);
 	temp = substr;
 	if (!substr)
 		return (NULL);
@@ -142,6 +130,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	}
 	*substr = 0;
 	substr = temp;
-	printf("qual a substr: %s\n", substr);
+	//printf("qual a substr: %s\n", substr);
 	return (substr);
 }

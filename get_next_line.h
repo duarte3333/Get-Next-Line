@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:29:15 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/04 00:03:56 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:44:07 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # endif
 
 size_t	ft_strlen(const char *str);
-size_t	ft_strlen_nl(const char *str);
+size_t	ft_strlen_nl(char *str);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 char	*ft_strchr(char *s, int c);
