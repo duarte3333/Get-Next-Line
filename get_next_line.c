@@ -6,7 +6,7 @@
 /*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/07 20:54:55 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/07 21:19:50 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_forward_line(char *line)
 	return (tmp);
 }
 
-//Esta funcao comeca por ler um buffer com o read()
+//Esta funcao comeca por ler um buffer com o read() 
 //Caso, a line seja vazia o read() retorna 0 
 //Caso, a line nao exista, o read() retorna -1
 //Caso um buffer nao chegue para ler a linha toda, 
