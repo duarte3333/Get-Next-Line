@@ -23,6 +23,7 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
+//Esta funcao conta o numero de elementos incluindo \0 ou \n
 size_t	ft_strlen_nl(char *str)
 {
 	int	i;
@@ -30,14 +31,14 @@ size_t	ft_strlen_nl(char *str)
 	i = 0;
 	if (!str)
 		return (0);
-	// if (str[i] == '\n')
-	// 	return (1);
 	while (str[i] != '\0' && str[i] != '\n')
 		i++;
 	i++;
 	return (i);
 }
 
+//Esta funcao aloca memoria para n bytes com o malloc
+//e depois coloca zeros em todos os bytes que alocou
 void	*ft_calloc(size_t nelem, size_t elsize)
 {
 	char	*arr;
@@ -101,35 +102,4 @@ char	*ft_strjoin(char *s1, char const *s2)
 	if (!s1)
 		free(s1);
 	return (concat);
-}
-
-//s - uma str normal
-//start - indice do str onde comeca a substr
-//len - tamanho da maximo da substr
-//Esta funcao vai criar uma substr desde o start ao indice len do s
-//sendo o len um indice posterior ao s
-//Caso o indice len exceda o tamanho da str s ele acaba a substring
-char	*ft_substr(char *s, unsigned int start, size_t len)
-{
-	char	*substr;
-	char	*temp;
-
-	if (!s)
-		return (NULL);
-	substr = (char *)malloc((len + 1) * sizeof(char));
-	//printf("len substr: %li\n", len + 1);
-	temp = substr;
-	if (!substr)
-		return (NULL);
-	while (len && s[start] != 0 && start <= ft_strlen(s))
-	{
-		*substr = s[start];
-		substr++;
-		start++;
-		len--;
-	}
-	*substr = 0;
-	substr = temp;
-	//printf("qual a substr: %s\n", substr);
-	return (substr);
 }

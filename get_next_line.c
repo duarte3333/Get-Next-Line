@@ -6,58 +6,89 @@
 /*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/07 02:24:04 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:45:06 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*forward_line(char *line)
+//s - uma str normal
+//start - indice do str onde comeca a substr
+//len - tamanho da maximo da substr
+//Esta funcao vai criar uma substr desde o start ao indice len do s
+//sendo o len um indice posterior ao s
+//Caso o indice len exceda o tamanho da str s ele acaba a substring
+char	*ft_substr(char *s, unsigned int start, size_t len)
+{
+	char	*substr;
+	char	*temp;
+
+	if (!s)
+		return (NULL);
+	substr = (char *)malloc((len + 1) * sizeof(char));
+	//printf("len substr: %li\n", len + 1);
+	temp = substr;
+	if (!substr)
+		return (NULL);
+	while (len && s[start] != 0 && start <= ft_strlen(s))
+	{
+		*substr = s[start];
+		substr++;
+		start++;
+		len--;
+	}
+	*substr = 0;
+	substr = temp;
+	//printf("qual a substr: %s\n", substr);
+	return (substr);
+}
+//Se a line nao existir retorna NULL
+//Se a line for '\0', damos free line e retorna-se NULL
+//Se a line for '\n', o temp aloca 1 byte para o NULL   
+//Na maioria dos casos, esta funcao vai andar a line para a frente 
+//ate ao ultimo elemento que leu, gerando uma variavel temporaria 
+//que ira conter desde o primeiro elemento da proxima linha 
+//ate ao final do ficheiro
+char	*ft_forward_line(char *line)
 {
 	char	*tmp;
 	int		i;
 	int		j;
-	int		size_tmp;
 
 	i = 0;
 	//printf("enter forward line\n");
 	if (!line)
 		return (NULL);
+	while (line[i] != '\0' && line[i] != '\n')
+			i++;
 	if (line[i] == '\0')
 	{
 		free(line);
 		return (NULL);
 	}
-	while (line[i] != '\0' && line[i] != '\n')
-			i++;
-	if (line[i] != '\0')
-	{
-		j = ++i;	
-	}
-	else
-		j = i;
+	j = ++i;	
 	while (line[i] != '\0')
 		i++;
-	size_tmp = i - j + 1;
 	//printf("size temp: %i\n",size_tmp);
-	tmp = (char *)malloc((size_tmp) * sizeof(char));
-	tmp[size_tmp - 1] = 0;
+	tmp = (char *)malloc((i - j + 1) * sizeof(char));
+	tmp[i - j] = 0;
 	i = 0;
-	while (size_tmp - 1)
+	while (line[j] != '\0')
 	{
 		tmp[i] = line[j];
 		i++;
 		j++;
-		size_tmp--;
 	}
 	free(line);
 	//printf("temp: %s\n",tmp);
 	return (tmp);
 }
 
-// A cada iteracao o read() retorna o numero de bytes que ja leu
-// Se acabar o ficheiro sai do loop, pois nb_line = 0
-// Se chegar a uma newline sai do loop, pois acabou a linha
+//Esta funcao comeca por ler um buffer com o read()
+//Caso, a line seja vazia o read() retorna 0 
+//Caso, a line nao exista, o read() retorna -1
+//Caso um buffer nao chegue para ler a linha toda, 
+//rescreve-se nele e vai se guardando tudo na line com o ft_strjoin()
 char	*ft_read_line(char *line, int fd, char	*buffer)
 {
 	int		nb_line;
@@ -67,6 +98,7 @@ char	*ft_read_line(char *line, int fd, char	*buffer)
 	//printf("buffer: %s\n", buffer);
 	if (nb_line <= 0)
 	{
+		free(buffer);
 		if (!line[0])
 		{
 			free(line);
@@ -89,8 +121,12 @@ char	*ft_read_line(char *line, int fd, char	*buffer)
 	return (line);
 }
 
-//linha 94, caso ft_read() retorne NULL
-//tirar calloc
+//tirar calloc////////////////////////////////////////////////////////////////////////
+//Caso o buffer seja menor que 0 ou o fd nao seja valido retorna-se NULL
+//Esta funcao ira ler a primeira linha de um ficheiro caso seja chamada, 
+//e caso seja chamada de novo ira ler a linha a seguir do ficheiro, etc...
+//Caso ja nao haja mais linhas no ficheiro para ler e se 
+//continue a chamar a funcao ela ira retorna NULL 
 char	*get_next_line(int fd)
 {
 	char		*buffer;
@@ -108,12 +144,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	if (!line)
-		line = calloc(1, 1);
+		line = (char *)calloc(1, 1);
 	if (!(ft_strchr(line, '\n')))
 		line = ft_read_line(line, fd, buffer);
 	ready_line = ft_substr(line, 0, ft_strlen_nl(line));
 	//printf("READY: %s|\n", ready_line);
-	line = forward_line(line);
+	line = ft_forward_line(line);
 	//printf("HOW I AM NEXT %s\n", line);
 	if (!ready_line)
 		free(line);
