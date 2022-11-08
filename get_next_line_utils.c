@@ -80,26 +80,18 @@ char	*ft_strjoin(char *s1, char const *s2)
 {
 	int		size_concat;
 	char	*concat;
-	char	*temp;
+	int		i;
+	int		j;
 
+	i = -1;
+	j = -1;
 	size_concat = ft_strlen(s1) + ft_strlen(s2);
-	//printf("\nsize buffer qnd leio %i\n", size_concat + 1);
-	concat = (char *)calloc((size_concat + 1), sizeof(char));
-	temp = concat;
-	while (*s1)
-	{
-		*concat = *s1;
-		concat++;
-		s1++;
-	}
-	while (*s2)
-	{
-		*concat = *s2;
-		concat++;
-		s2++;
-	}
-	concat = temp;
-	if (!s1)
+	concat = (char *)ft_calloc((size_concat + 1), sizeof(char));
+	while (s1[++i])
+		concat[i] = s1[i];
+	while (s2[++j])
+		concat[i + j] = s2[j];
+	if (s1)
 		free(s1);
 	return (concat);
 }

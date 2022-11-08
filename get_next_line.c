@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsa-mora <dsa-mora@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dsa-mora <dsa-mora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 18:01:12 by dsa-mora          #+#    #+#             */
-/*   Updated: 2022/11/07 21:19:50 by dsa-mora         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:34:54 by dsa-mora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	substr = (char *)malloc((len + 1) * sizeof(char));
-	//printf("len substr: %li\n", len + 1);
 	temp = substr;
 	if (!substr)
 		return (NULL);
@@ -39,7 +38,6 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	}
 	*substr = 0;
 	substr = temp;
-	//printf("qual a substr: %s\n", substr);
 	return (substr);
 }
 //Se a line nao existir retorna NULL
@@ -49,6 +47,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 //ate ao ultimo elemento que leu, gerando uma variavel temporaria 
 //que ira conter desde o primeiro elemento da proxima linha 
 //ate ao final do ficheiro
+
 char	*ft_forward_line(char *line)
 {
 	char	*tmp;
@@ -56,20 +55,18 @@ char	*ft_forward_line(char *line)
 	int		j;
 
 	i = 0;
-	//printf("enter forward line\n");
 	if (!line)
 		return (NULL);
 	while (line[i] != '\0' && line[i] != '\n')
 			i++;
-	if (line[i] == '\0')
+	if (!line[i])
 	{
 		free(line);
 		return (NULL);
 	}
-	j = ++i;	
+	j = ++i;
 	while (line[i] != '\0')
 		i++;
-	//printf("size temp: %i\n",size_tmp);
 	tmp = (char *)malloc((i - j + 1) * sizeof(char));
 	tmp[i - j] = 0;
 	i = -1;
@@ -77,7 +74,6 @@ char	*ft_forward_line(char *line)
 	while (line[++j] != '\0')
 		tmp[++i] = line[j];
 	free(line);
-	//printf("temp: %s\n",tmp);
 	return (tmp);
 }
 
@@ -91,11 +87,8 @@ char	*ft_read_line(char *line, int fd, char	*buffer)
 	int		nb_line;
 
 	nb_line = read(fd, buffer, BUFFER_SIZE);
-	//printf("nb line: %i\n", nb_line);
-	//printf("buffer: %s\n", buffer);
 	if (nb_line <= 0)
 	{
-		free(buffer);
 		if (!line[0])
 		{
 			free(line);
@@ -109,16 +102,11 @@ char	*ft_read_line(char *line, int fd, char	*buffer)
 		if (ft_strchr(line, '\n'))
 			break ;
 		nb_line = read(fd, buffer, BUFFER_SIZE);
-		//printf("nb line: %i\n", nb_line);
-		//printf("buffer: %s\n", buffer);
 		buffer[nb_line] = 0;
 	}
-	free(buffer);
-	//printf("Line que foi lida: \n %s\n", line);
 	return (line);
 }
 
-//tirar calloc////////////////////////////////////////////////////////////////////////
 //Caso o buffer seja menor que 0 ou o fd nao seja valido retorna-se NULL
 //Esta funcao ira ler a primeira linha de um ficheiro caso seja chamada, 
 //e caso seja chamada de novo ira ler a linha a seguir do ficheiro, etc...
@@ -130,7 +118,7 @@ char	*get_next_line(int fd)
 	static char	*line;
 	char		*ready_line;
 
-	buffer = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
+	buffer = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (BUFFER_SIZE <= 0 || (read(fd, 0, 0) < 0))
 	{
 		if (line)
@@ -138,18 +126,18 @@ char	*get_next_line(int fd)
 			free(line);
 			line = NULL;
 		}
+		free(buffer);
 		return (NULL);
 	}
 	if (!line)
-		line = (char *)calloc(1, 1);
+		line = (char *)ft_calloc(1, 1);
 	if (!(ft_strchr(line, '\n')))
 		line = ft_read_line(line, fd, buffer);
 	ready_line = ft_substr(line, 0, ft_strlen_nl(line));
-	//printf("READY: %s|\n", ready_line);
 	line = ft_forward_line(line);
-	//printf("HOW I AM NEXT %s\n", line);
 	if (!ready_line)
 		free(line);
+	free(buffer);
 	return (ready_line);
 }
 
@@ -180,4 +168,9 @@ char	*get_next_line(int fd)
 // 	printf("\033[0m"); */
 // 	s = get_next_line(fd); printf("\nOUTPUT 3 Iteration: %s\n", s); free(s);
 // 	printf("-----------------------------------------------\n");
+// 	s = get_next_line(fd); printf("\nOUTPUT 3 Iteration: %s\n", s); free(s);
+// 	printf("-----------------------------------------------\n");
+// 	s = get_next_line(fd); printf("\nOUTPUT 3 Iteration: %s\n", s); free(s);
+// 	printf("-----------------------------------------------\n");
 // }
+
